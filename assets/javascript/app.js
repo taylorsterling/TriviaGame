@@ -57,6 +57,7 @@ function hideStuff() {
     $("#B").hide();
     $("#C").hide();
     $("#D").hide();
+    $("#reset").hide();
     $("#currentQuestion").hide();
     $("#correctAnswer").hide();
 };
@@ -90,6 +91,35 @@ $(document).ready(function () {
             answerClicked(3);
         });
 
+        $("#reset").on("click", function () {
+            hideStuff();
+            $(".instructions").hide();
+            $("#playbutton").hide();
+            timedText();
+            $("#A").show();
+            $("#B").show();
+            $("#C").show();
+            $("#D").show();
+            $("#currentQuestion").show();
+            presentQuestion = questions[questionNumber];
+            displayQuestion(presentQuestion);
+            $("#currentQuestion").html("Game Over! Your Score: " + score).hide();
+
+            $("#A").on("click", function () {
+                answerClicked(0);
+            });
+            $("#B").on("click", function () {
+                answerClicked(1);
+            });
+            $("#C").on("click", function () {
+                answerClicked(2);
+            });
+            $("#D").on("click", function () {
+                answerClicked(3);
+            });
+        });
+
+
         function answerClicked(answerChosen) {
             hideStuff();
             $("#correctAnswer").show();
@@ -112,20 +142,23 @@ $(document).ready(function () {
             hideStuff();
             $("#timer").hide();
             $("#correctAnswerDisplay").hide();
-            if(questionNumber >= questions.length) {
+            if (questionNumber >= questions.length) {
                 displayScore();
             }
-            presentQuestion = questions[questionNumber]; 
+            presentQuestion = questions[questionNumber];
             $("#correctAnswer").hide();
             $("#corimages").hide();
+            $("#timer").show();
             displayQuestion(presentQuestion);
             seconds = 30;
             timedText();
         };
 
+
         function displayScore() {
+            $("#timer").hide();
             $("#currentQuestion").html("Game Over! Your Score: " + score).show();
-            
+            $("#reset").show();
         }
 
         function timedText() {
